@@ -1,0 +1,12 @@
+{
+  "name": "no-cookies-counter",
+  "version": "1.0.0",
+  "description": "Counter state management without cookies",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

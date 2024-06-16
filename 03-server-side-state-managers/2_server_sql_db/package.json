@@ -1,0 +1,13 @@
+{
+  "name": "database-storage-counter",
+  "version": "1.0.0",
+  "description": "Counter state management using SQL database",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.2"
+  }
+}

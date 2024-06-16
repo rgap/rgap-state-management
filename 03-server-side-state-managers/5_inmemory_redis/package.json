@@ -1,0 +1,13 @@
+{
+  "name": "inmemory-redis-counter",
+  "version": "1.0.0",
+  "description": "Counter state management using in-memory storage with Redis",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "redis": "^3.1.2"
+  }
+}

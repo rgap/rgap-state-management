@@ -1,0 +1,13 @@
+{
+  "name": "server-side-sessions-counter",
+  "version": "1.0.0",
+  "description": "Counter state management using server-side sessions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.2"
+  }
+}

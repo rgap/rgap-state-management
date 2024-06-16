@@ -1,0 +1,12 @@
+{
+  "name": "file-storage-counter",
+  "version": "1.0.0",
+  "description": "Counter state management using file storage",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

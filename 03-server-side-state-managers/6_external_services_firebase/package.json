@@ -1,0 +1,13 @@
+{
+  "name": "external-services-firebase-counter",
+  "version": "1.0.0",
+  "description": "Counter state management using Firebase",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase-admin": "^9.6.0"
+  }
+}
