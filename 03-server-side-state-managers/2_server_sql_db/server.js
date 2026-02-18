@@ -1,4 +1,4 @@
-const express = require("../1_server_state_and_cookies_client/node_modules/express");
+const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const app = express();
 const port = 9200;

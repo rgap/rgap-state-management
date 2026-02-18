@@ -1,4 +1,4 @@
-const express = require("../3_server_state_and_cookies_client/node_modules/express");
+const express = require("express");
 const session = require("express-session");
 const app = express();
 const port = 9200;
