@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Cookie</title>
+  <style>
+    body {
+      font-family: monospace;
+      max-width: 900px;
+      margin: 40px auto;
+      font-size: 22px;
+    }
+
+    input,
+    button {
+      padding: 6px;
+      font-family: monospace;
+    }
+
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Cookie demo</h2>
+
+  <p>
+    1. Type a name and click. The page sets a cookie, then calls
+    <code>/cart</code>.
+  </p>
+  <input id="name" placeholder="your name" />
+  <button onclick="setAndFetch()">Set cookie and fetch</button>
+
+  <p>
+    2. Click again. No cookie code runs — the browser sends it automatically.
+  </p>
+  <button onclick="justFetch()">Just fetch /cart</button>
+
+  <pre id="result">—</pre>
+
+  <script>
+    async function justFetch() {
+      // Step 1: Make a normal same-origin request to /cart.
+      // If cookies exist, the browser automatically adds:
+      // Cookie: username=...
+      const res = await fetch("/cart");
+
+      // Step 2: Show whatever the server sent back.
+      document.getElementById("result").textContent = await res.text();
+      // The server already knows the name because of the cookie automatically sent from the browser.
+    }
+
+    async function setAndFetch() {
+      const name = document.getElementById("name").value.trim();
+      // Store the name in a browser cookie.
+      if (name) document.cookie = `username=${name}; path=/`;
+      await justFetch();
+    }
+  </script>
+</body>
+
+</html>

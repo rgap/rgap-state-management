@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HTTP Is Stateless</title>
+  <style>
+    body { font-family: monospace; max-width: 600px; margin: 40px auto; }
+    button { margin: 4px 0; padding: 6px 14px; cursor: pointer; }
+    .response { margin-top: 8px; padding: 10px; background: #f4f4f4; border-left: 3px solid #aaa; }
+    .note { margin-top: 24px; color: #555; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h2>HTTP Is Stateless</h2>
+  <p>Each button sends a separate HTTP request. The server has no memory between them.</p>
+
+  <button onclick="sendRequest('request-1')">Send request 1</button>
+  <div id="request-1" class="response">—</div>
+
+  <br>
+
+  <button onclick="sendRequest('request-2')">Send request 2</button>
+  <div id="request-2" class="response">—</div>
+
+  <!-- PROOF: both responses are identical.
+       The server does not know that request 2 followed request 1.
+       It does not count requests. It does not remember the client's address.
+       Every call is handled as if it were the first and only one. -->
+  <p class="note">
+    Both responses are identical — the server returns the same answer regardless of
+    how many times you have called before. It has no counter, no memory, no session.
+    That is statelessness: the response depends only on what arrived in this request,
+    nothing else.
+  </p>
+
+  <script>
+    async function sendRequest(targetId) {
+      const response = await fetch("http://localhost:8000");
+      const text = await response.text();
+      // The text will be the same both times — proof that the server
+      // remembered nothing from the previous request.
+      document.getElementById(targetId).textContent = text;
+    }
+  </script>
+</body>
+</html>
