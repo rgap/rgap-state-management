@@ -1,0 +1,12 @@
+{
+  "name": "cookies-how-it-works",
+  "version": "1.0.0",
+  "description": "Small Express example showing Set-Cookie and Cookie headers",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

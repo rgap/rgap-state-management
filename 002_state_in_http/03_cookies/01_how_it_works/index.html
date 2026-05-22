@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Cookie Flow</title>
+  <style>
+    body {
+      font-family: monospace;
+      max-width: 900px;
+      margin: 40px auto;
+      font-size: 20px;
+      line-height: 1.45;
+      padding: 0 16px;
+    }
+
+    .controls {
+      display: grid;
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .step {
+      border: 1px solid #ddd;
+      padding: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 8px 10px;
+      font-family: monospace;
+      font-size: 16px;
+      min-width: 220px;
+    }
+
+    button {
+      padding: 8px 10px;
+      font-family: monospace;
+      font-size: 16px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    pre {
+      background: #f4f4f4;
+      padding: 12px;
+      min-height: 48px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Cookie flow</h1>
+
+  <p>
+    This page calls the Express server. Watch DevTools Network and the server
+    terminal to see the difference between <code>Set-Cookie</code> and
+    <code>Cookie</code>.
+  </p>
+
+  <section class="controls">
+    <div class="step">
+      <p>1. Before login, there is no cookie, so the server cannot identify the request.</p>
+      <button onclick="fetchProfile()">Fetch /profile</button>
+    </div>
+
+    <div class="step">
+      <p>2. Login sends the username as JSON. The server replies with <code>Set-Cookie</code>.</p>
+      <label for="username">Username sent by the frontend</label>
+      <input id="username" placeholder="username" />
+      <button onclick="login()">Login and receive cookie</button>
+    </div>
+
+    <div class="step">
+      <p>3. Fetch again. The browser now sends the saved cookie automatically.</p>
+      <div class="button-row">
+        <button onclick="fetchProfile()">Fetch /profile again</button>
+        <button onclick="logout()">Logout and delete cookie</button>
+      </div>
+    </div>
+  </section>
+
+  <h2>Response</h2>
+  <pre id="result">Result appears here.</pre>
+
+  <script>
+    async function showResponse(response) {
+      const text = await response.text();
+      document.getElementById("result").textContent =
+        `${response.status} ${response.statusText}\n\n${text}`;
+    }
+
+    async function fetchProfile() {
+      // If the user cookie exists, the browser automatically sends:
+      // Cookie: user=<username>
+      const response = await fetch("/profile");
+      await showResponse(response);
+    }
+
+    async function login() {
+      const username = document.getElementById("username").value.trim();
+
+      // Step 1: The frontend sends the username to the login endpoint.
+      // This request body is not the cookie yet; it is just normal JSON.
+      //
+      // Step 2: The server receives the username from the request body
+      // and responds with:
+      // Set-Cookie: user=<username>; Path=/
+      // which the browser stores in document.cookie
+      //
+      // Step 3: The browser stores that cookie after the response.
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      });
+
+      await showResponse(response);
+    }
+
+    async function logout() {
+      // The server responds with Max-Age=0, which deletes the cookie.
+      const response = await fetch("/logout");
+      await showResponse(response);
+    }
+  </script>
+</body>
+
+</html>
