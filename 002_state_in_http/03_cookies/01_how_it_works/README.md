@@ -30,8 +30,10 @@ This folder includes a runnable Express example:
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Browser page with buttons that call the server |
-| `server.js` | Express server that sends, reads, and deletes a cookie |
+| `public/index.html` | Browser page with buttons that call the server |
+| `src/server.js` | Creates the Express app, registers middleware/routes, and starts the server |
+| `src/routes.js` | Route handlers for `/`, `/login`, `/profile`, and `/logout` |
+| `src/cookies.js` | Cookie parsing, reading, setting, and clearing helpers |
 | `package.json` | Defines the `start` script and Express dependency |
 
 The server has these routes:
@@ -49,6 +51,14 @@ npm start
 ```
 
 Open `http://localhost:3000` and use the buttons.
+
+If port `3000` is already in use:
+
+```sh
+npm start -- 3001
+```
+
+Then open `http://localhost:3001`.
 
 Try it in this order:
 
